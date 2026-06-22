@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Status do Sistema — Metrô e CPTM</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@600;700&amp;family=Inter:wght@400;600&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface-variant": "#e5e2e2",
+            "error": "#ba1a1a",
+            "tertiary-container": "#251d14",
+            "tertiary-fixed-dim": "#d3c4b6",
+            "on-secondary-fixed-variant": "#003ea8",
+            "on-tertiary-container": "#918477",
+            "surface-dim": "#dcd9d9",
+            "on-surface-variant": "#44474a",
+            "surface-container-lowest": "#ffffff",
+            "on-secondary-container": "#fefcff",
+            "on-tertiary": "#ffffff",
+            "on-primary-fixed-variant": "#42474d",
+            "on-surface": "#1c1b1c",
+            "on-primary-fixed": "#171c21",
+            "surface-tint": "#5a5f65",
+            "secondary": "#0051d5",
+            "on-tertiary-fixed": "#221a11",
+            "surface-container-highest": "#e5e2e2",
+            "secondary-fixed": "#dbe1ff",
+            "inverse-primary": "#c2c7ce",
+            "primary-fixed-dim": "#c2c7ce",
+            "inverse-on-surface": "#f3f0f0",
+            "surface-container-low": "#f6f3f3",
+            "inverse-surface": "#313031",
+            "surface-bright": "#fcf8f8",
+            "error-container": "#ffdad6",
+            "primary": "#03060a",
+            "surface-container-high": "#ebe7e7",
+            "on-error": "#ffffff",
+            "secondary-fixed-dim": "#b4c5ff",
+            "primary-container": "#1a1f24",
+            "on-background": "#1c1b1c",
+            "surface-container": "#f0eded",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#82878d",
+            "tertiary-fixed": "#f0e0d1",
+            "outline-variant": "#c5c6ca",
+            "tertiary": "#090401",
+            "primary-fixed": "#dee3ea",
+            "on-primary": "#ffffff",
+            "outline": "#75777b",
+            "background": "#fcf8f8",
+            "surface": "#fcf8f8",
+            "on-secondary-fixed": "#00174b",
+            "on-tertiary-fixed-variant": "#4f453a",
+            "secondary-container": "#316bf3",
+            "on-secondary": "#ffffff",
+            // Semantic Status Colors
+            "status-normal": "#10B981", // Emerald 500
+            "status-warning": "#F59E0B", // Amber 500
+            "status-error": "#EF4444", // Red 500
+            // Line Colors
+            "line-azul": "#004B87",
+            "line-verde": "#007A5E",
+            "line-vermelha": "#EE3E32",
+            "line-amarela": "#F0D100",
+            "line-lilas": "#8A195F",
+            "line-prata": "#8F9193",
+            "line-rubi": "#CA005D",
+            "line-diamante": "#9E9E9E",
+            "line-esmeralda": "#00A88F",
+            "line-turquesa": "#007C8F",
+            "line-coral": "#F04E22",
+            "line-safira": "#001D7E",
+            "line-jade": "#00B25A"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "row-height-min": "72px",
+            "stack-gap": "12px",
+            "container-padding": "16px",
+            "gutter": "16px",
+            "margin-desktop": "32px",
+            "margin-mobile": "16px"
+          },
+          fontFamily: {
+            "body-md": ["Inter", "sans-serif"],
+            "headline-sm": ["Hanken Grotesk", "sans-serif"],
+            "status-pill": ["Inter", "sans-serif"],
+            "headline-md": ["Hanken Grotesk", "sans-serif"],
+            "body-lg": ["Inter", "sans-serif"],
+            "display": ["Hanken Grotesk", "sans-serif"],
+            "label-caps": ["JetBrains Mono", "monospace"]
+          },
+          fontSize: {
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "fontWeight": "600" }],
+            "status-pill": ["13px", { "lineHeight": "16px", "fontWeight": "600" }],
+            "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "display": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Custom utility for the Material Symbols Outlined font */
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;  /* Preferred icon size */
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    
+    /* Fill utility for icons */
+    .icon-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="bg-white/80 dark:bg-surface-container/80 backdrop-blur-xl border-b border-outline-variant dark:border-outline w-full px-margin-mobile md:px-margin-desktop py-4 z-50 sticky top-0 flex justify-between items-center transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary text-on-primary rounded-xl flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined icon-fill">subway</span>
+</div>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-primary-fixed">Status do Sistema <span class="hidden sm:inline font-normal text-on-surface-variant">— Metrô e CPTM</span></h1>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant dark:text-on-surface-variant">
+<span class="hidden md:inline font-body-md text-body-md">Atualizado às 14:32</span>
+<button aria-label="Atualizar" class="p-2 hover:bg-surface-container-high dark:hover:bg-surface-container-highest rounded-full transition-colors active:scale-95 duration-100 flex items-center justify-center text-primary dark:text-primary-fixed">
+<span class="material-symbols-outlined" data-icon="refresh">refresh</span>
+</button>
+</div>
+</header>
+<main class="flex-grow max-w-[1200px] w-full mx-auto px-margin-mobile md:px-margin-desktop py-8 flex flex-col gap-6">
+<!-- Summary Banner -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-status-warning/20 flex items-center justify-center text-status-warning">
+<span class="material-symbols-outlined icon-fill">warning</span>
+</div>
+<div>
+<p class="font-headline-sm text-headline-sm text-on-surface">2 linhas com ocorrências</p>
+<p class="font-body-md text-body-md text-on-surface-variant">11 em operação normal</p>
+</div>
+</div>
+</section>
+<!-- Filter / Legend Bar -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-outline-variant pb-4 sticky top-[72px] bg-surface z-40">
+<!-- Filter Chips -->
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-1.5 rounded-full bg-primary text-on-primary font-status-pill text-status-pill transition-colors">Todas</button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant text-on-surface-variant hover:bg-surface-container-low font-status-pill text-status-pill transition-colors bg-transparent">Metrô</button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant text-on-surface-variant hover:bg-surface-container-low font-status-pill text-status-pill transition-colors bg-transparent">CPTM</button>
+<button class="px-4 py-1.5 rounded-full border border-outline-variant text-status-warning hover:bg-status-warning/10 font-status-pill text-status-pill transition-colors bg-transparent flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">error</span>
+          Com ocorrências
+        </button>
+</div>
+<!-- Compact Legend -->
+<div class="flex items-center gap-4 text-body-md text-on-surface-variant">
+<div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-status-normal"></div>Normal</div>
+<div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-status-warning"></div>Atenção</div>
+<div class="flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-status-error"></div>Crítico</div>
+</div>
+</div>
+<!-- Main List Container -->
+<div class="flex flex-col gap-8">
+<!-- Section: Metrô -->
+<section>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4">Metrô</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<!-- L1 Azul -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-outline-variant min-h-row-height-min hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-white" style="background-color: var(--color-line-azul, #004B87);">L1</div>
+<span class="font-headline-sm text-headline-sm">Azul</span>
+</div>
+<div class="mt-3 sm:mt-0 px-3 py-1 rounded-full bg-status-normal/10 border border-status-normal flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-normal"></div>
+<span class="font-status-pill text-status-pill text-status-normal">Operação Normal</span>
+</div>
+</div>
+<!-- L2 Verde -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-outline-variant min-h-row-height-min hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-white" style="background-color: var(--color-line-verde, #007A5E);">L2</div>
+<span class="font-headline-sm text-headline-sm">Verde</span>
+</div>
+<div class="mt-3 sm:mt-0 px-3 py-1 rounded-full bg-status-normal/10 border border-status-normal flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-normal"></div>
+<span class="font-status-pill text-status-pill text-status-normal">Operação Normal</span>
+</div>
+</div>
+<!-- L3 Vermelha (EXPANDED) -->
+<div class="flex flex-col p-4 border-b border-outline-variant min-h-row-height-min bg-status-warning/5 transition-colors">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-white" style="background-color: var(--color-line-vermelha, #EE3E32);">L3</div>
+<span class="font-headline-sm text-headline-sm">Vermelha</span>
+</div>
+<div class="mt-3 sm:mt-0 flex items-center gap-4">
+<div class="px-3 py-1 rounded-full bg-status-warning/10 border border-status-warning flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-warning"></div>
+<span class="font-status-pill text-status-pill text-status-warning">Velocidade Reduzida</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant transform rotate-180 transition-transform">expand_more</span>
+</div>
+</div>
+<!-- Expanded Content -->
+<div class="mt-4 pt-4 border-t border-outline-variant/50 pl-[56px]">
+<div class="flex flex-col gap-4">
+<div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Motivo</h4>
+<p class="font-body-md text-body-md text-on-surface">Circulação de trens com maior intervalo entre Sé e Tatuapé devido a falha em trem.</p>
+</div>
+<div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-2">Estações Afetadas</h4>
+<div class="flex items-center gap-0">
+<div class="relative flex flex-col items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-white border-2 border-[#EE3E32] z-10"></div>
+<span class="font-body-md text-[12px] mt-1 text-on-surface-variant absolute top-3 w-16 text-center">Sé</span>
+</div>
+<div class="h-[2px] w-16 bg-[#EE3E32] -mt-6"></div>
+<div class="relative flex flex-col items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-white border-2 border-[#EE3E32] z-10"></div>
+<span class="font-body-md text-[12px] mt-1 text-on-surface-variant absolute top-3 w-16 text-center">Belém</span>
+</div>
+<div class="h-[2px] w-16 bg-[#EE3E32] -mt-6"></div>
+<div class="relative flex flex-col items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-white border-2 border-[#EE3E32] z-10"></div>
+<span class="font-body-md text-[12px] mt-1 text-on-surface-variant absolute top-3 w-16 text-center">Tatuapé</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg border border-outline-variant/50 flex gap-3 items-start mt-4">
+<span class="material-symbols-outlined text-status-warning text-[20px] mt-0.5">alt_route</span>
+<div>
+<h4 class="font-status-pill text-status-pill text-on-surface">Alternativa</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Utilize a Linha 11-Coral como alternativa.</p>
+</div>
+</div>
+<div class="text-on-surface-variant">
+<h4 class="font-label-caps text-label-caps uppercase tracking-widest mb-1">Histórico</h4>
+<p class="font-body-md text-[12px]">13:58 — Operação Normal → Velocidade Reduzida</p>
+</div>
+</div>
+</div>
+</div>
+<!-- L4 Amarela -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-outline-variant min-h-row-height-min hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-black" style="background-color: var(--color-line-amarela, #F0D100);">L4</div>
+<span class="font-headline-sm text-headline-sm">Amarela</span>
+</div>
+<div class="mt-3 sm:mt-0 px-3 py-1 rounded-full bg-status-normal/10 border border-status-normal flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-normal"></div>
+<span class="font-status-pill text-status-pill text-status-normal">Operação Normal</span>
+</div>
+</div>
+<!-- L5 Lilás -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-outline-variant min-h-row-height-min hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-white" style="background-color: var(--color-line-lilas, #8A195F);">L5</div>
+<span class="font-headline-sm text-headline-sm">Lilás</span>
+</div>
+<div class="mt-3 sm:mt-0 px-3 py-1 rounded-full bg-status-normal/10 border border-status-normal flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-normal"></div>
+<span class="font-status-pill text-status-pill text-status-normal">Operação Normal</span>
+</div>
+</div>
+<!-- L15 Prata -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 min-h-row-height-min hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-black" style="background-color: var(--color-line-prata, #8F9193);">L15</div>
+<span class="font-headline-sm text-headline-sm">Prata</span>
+</div>
+<div class="mt-3 sm:mt-0 px-3 py-1 rounded-full bg-status-normal/10 border border-status-normal flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-normal"></div>
+<span class="font-status-pill text-status-pill text-status-normal">Operação Normal</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: CPTM/ViaMobilidade -->
+<section>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-4">CPTM / ViaMobilidade</h2>
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+<!-- L7 Rubi -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-outline-variant min-h-row-height-min hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-white" style="background-color: var(--color-line-rubi, #CA005D);">L7</div>
+<span class="font-headline-sm text-headline-sm">Rubi</span>
+</div>
+<div class="mt-3 sm:mt-0 px-3 py-1 rounded-full bg-status-normal/10 border border-status-normal flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-normal"></div>
+<span class="font-status-pill text-status-pill text-status-normal">Operação Normal</span>
+</div>
+</div>
+<!-- L8 Diamante (EXPANDED) -->
+<div class="flex flex-col p-4 border-b border-outline-variant min-h-row-height-min bg-status-error/5 transition-colors">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between cursor-pointer">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-white" style="background-color: var(--color-line-diamante, #9E9E9E);">L8</div>
+<span class="font-headline-sm text-headline-sm">Diamante</span>
+</div>
+<div class="mt-3 sm:mt-0 flex items-center gap-4">
+<div class="px-3 py-1 rounded-full bg-status-error/10 border border-status-error flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-error"></div>
+<span class="font-status-pill text-status-pill text-status-error">Paralisada</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant transform rotate-180 transition-transform">expand_more</span>
+</div>
+</div>
+<!-- Expanded Content -->
+<div class="mt-4 pt-4 border-t border-outline-variant/50 pl-[56px]">
+<div class="flex flex-col gap-4">
+<div>
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-1">Motivo</h4>
+<p class="font-body-md text-body-md text-on-surface">Operação interrompida entre Itapevi e Carapicuíba devido a queda de rede aérea.</p>
+</div>
+<div class="overflow-x-auto pb-6 -mb-6">
+<h4 class="font-label-caps text-label-caps text-on-surface-variant uppercase tracking-widest mb-2">Trecho Paralisado</h4>
+<div class="flex items-center gap-0 min-w-max">
+<div class="relative flex flex-col items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-white border-2 border-[#9E9E9E] z-10"></div>
+<span class="font-body-md text-[12px] mt-1 text-on-surface-variant absolute top-3 w-16 text-center">Itapevi</span>
+</div>
+<div class="h-[2px] w-16 bg-[#9E9E9E] -mt-6"></div>
+<div class="relative flex flex-col items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-white border-2 border-[#9E9E9E] z-10"></div>
+<span class="font-body-md text-[12px] mt-1 text-on-surface-variant absolute top-3 w-16 text-center">Jandira</span>
+</div>
+<div class="h-[2px] w-16 bg-[#9E9E9E] -mt-6"></div>
+<div class="relative flex flex-col items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-white border-2 border-[#9E9E9E] z-10"></div>
+<span class="font-body-md text-[12px] mt-1 text-on-surface-variant absolute top-3 w-16 text-center">Barueri</span>
+</div>
+<div class="h-[2px] w-16 bg-[#9E9E9E] -mt-6"></div>
+<div class="relative flex flex-col items-center">
+<div class="w-2.5 h-2.5 rounded-full bg-white border-2 border-[#9E9E9E] z-10"></div>
+<span class="font-body-md text-[12px] mt-1 text-on-surface-variant absolute top-3 w-20 text-center">Carapicuíba</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-3 rounded-lg border border-outline-variant/50 flex gap-3 items-start mt-6">
+<span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">directions_bus</span>
+<div>
+<h4 class="font-status-pill text-status-pill text-on-surface">Operação PAESE</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Ônibus PAESE acionados para o trecho afetado.</p>
+</div>
+</div>
+<div class="text-on-surface-variant">
+<h4 class="font-label-caps text-label-caps uppercase tracking-widest mb-1">Histórico</h4>
+<p class="font-body-md text-[12px]">14:10 — Velocidade Reduzida → Paralisada</p>
+</div>
+</div>
+</div>
+</div>
+<!-- L9 Esmeralda -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-outline-variant min-h-row-height-min hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-white" style="background-color: var(--color-line-esmeralda, #00A88F);">L9</div>
+<span class="font-headline-sm text-headline-sm">Esmeralda</span>
+</div>
+<div class="mt-3 sm:mt-0 px-3 py-1 rounded-full bg-status-normal/10 border border-status-normal flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-normal"></div>
+<span class="font-status-pill text-status-pill text-status-normal">Operação Normal</span>
+</div>
+</div>
+<!-- L10 Turquesa -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-outline-variant min-h-row-height-min hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-white" style="background-color: var(--color-line-turquesa, #007C8F);">L10</div>
+<span class="font-headline-sm text-headline-sm">Turquesa</span>
+</div>
+<div class="mt-3 sm:mt-0 px-3 py-1 rounded-full bg-status-normal/10 border border-status-normal flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-normal"></div>
+<span class="font-status-pill text-status-pill text-status-normal">Operação Normal</span>
+</div>
+</div>
+<!-- L11 Coral -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-outline-variant min-h-row-height-min hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-white" style="background-color: var(--color-line-coral, #F04E22);">L11</div>
+<span class="font-headline-sm text-headline-sm">Coral</span>
+</div>
+<div class="mt-3 sm:mt-0 px-3 py-1 rounded-full bg-status-normal/10 border border-status-normal flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-normal"></div>
+<span class="font-status-pill text-status-pill text-status-normal">Operação Normal</span>
+</div>
+</div>
+<!-- L12 Safira -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border-b border-outline-variant min-h-row-height-min hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-white" style="background-color: var(--color-line-safira, #001D7E);">L12</div>
+<span class="font-headline-sm text-headline-sm">Safira</span>
+</div>
+<div class="mt-3 sm:mt-0 px-3 py-1 rounded-full bg-status-normal/10 border border-status-normal flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-normal"></div>
+<span class="font-status-pill text-status-pill text-status-normal">Operação Normal</span>
+</div>
+</div>
+<!-- L13 Jade -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 min-h-row-height-min hover:bg-surface-container-low transition-colors">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg flex items-center justify-center font-headline-sm text-white" style="background-color: var(--color-line-jade, #00B25A);">L13</div>
+<span class="font-headline-sm text-headline-sm">Jade</span>
+</div>
+<div class="mt-3 sm:mt-0 px-3 py-1 rounded-full bg-status-normal/10 border border-status-normal flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-status-normal"></div>
+<span class="font-status-pill text-status-pill text-status-normal">Operação Normal</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-low dark:bg-surface-dim border-t border-outline-variant dark:border-outline mt-auto w-full">
+<div class="flex flex-col md:flex-row justify-between items-center gap-stack-gap max-w-7xl mx-auto w-full p-margin-mobile">
+<span class="font-label-caps text-label-caps uppercase tracking-widest text-on-surface-variant dark:text-on-surface-variant">
+        Dados em tempo real via API oficial.
+      </span>
+<div class="flex gap-4">
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors cursor-pointer" href="#">Acessibilidade</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors cursor-pointer" href="#">Sobre o Projeto</a>
+<a class="font-body-md text-body-md text-on-surface-variant dark:text-on-surface-variant hover:text-secondary dark:hover:text-secondary-fixed-dim transition-colors cursor-pointer" href="#">Termos de Uso</a>
+</div>
+</div>
+</footer>
+</body></html>
