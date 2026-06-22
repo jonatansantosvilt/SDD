@@ -1,0 +1,175 @@
+openapi: 3.0.3
+info:
+  title: Status Metrô — Line Status API
+  description: >
+    Backend REST API for the Status Metrô application. Serves a normalized, last-known-good
+    snapshot of São Paulo Metrô and CPTM line statuses, refreshed from the upstream CCR mobility
+    source every 60 seconds. This is the authored contract; the running service publishes the
+    equivalent OpenAPI via springdoc/Swagger UI.
+  version: 1.0.0
+servers:
+  - url: /api/v1
+    description: Backend base path
+paths:
+  /line-status:
+    get:
+      summary: Get the current normalized line-status snapshot
+      operationId: getLineStatus
+      tags: [line-status]
+      responses:
+        "200":
+          description: >
+            A snapshot is available (fresh or last-known-good). When the most recent upstream fetch
+            failed but a prior snapshot exists, `stale` is true and `lastUpdated` reflects the older
+            successful fetch.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StatusSnapshot"
+              examples:
+                normal:
+                  summary: All lines operating normally
+                  value:
+                    lastUpdated: "2026-06-22T18:47:59"
+                    fetchedAt: "2026-06-22T18:48:01"
+                    stale: false
+                    available: true
+                    partial: false
+                    operators:
+                      - uid: "METRO"
+                        name: "Metro SP"
+                        state: "SP"
+                        logoUrl: "https://webapi.grupoccr.com.br/content/.../logo.svg"
+                        lines:
+                          - uid: "METRO-L1"
+                            number: "1"
+                            name: "Azul"
+                            colorRgb: "#0A3D91"
+                            iconUrl: null
+                            operatorUid: "METRO"
+                            status:
+                              code: "OperacaoNormal"
+                              label: "Operação Normal"
+                              description: null
+                              category: "NORMAL"
+                    orderedLines:
+                      - uid: "METRO-L1"
+                        number: "1"
+                        name: "Azul"
+                        colorRgb: "#0A3D91"
+                        iconUrl: null
+                        operatorUid: "METRO"
+                        status:
+                          code: "OperacaoNormal"
+                          label: "Operação Normal"
+                          description: null
+                          category: "NORMAL"
+                stale:
+                  summary: Upstream unreachable, serving last-known-good
+                  value:
+                    lastUpdated: "2026-06-22T18:30:00"
+                    fetchedAt: "2026-06-22T18:30:02"
+                    stale: true
+                    available: true
+                    partial: false
+                    operators: []
+                    orderedLines: []
+        "503":
+          description: >
+            No snapshot has ever been successfully obtained (upstream unavailable since startup).
+            The frontend shows a friendly "temporarily unavailable" message (FR-009a).
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Unavailable"
+              example:
+                available: false
+                message: "Status temporariamente indisponível. Tente novamente em instantes."
+components:
+  schemas:
+    StatusCategory:
+      type: string
+      enum: [NORMAL, DISRUPTED, UNKNOWN]
+      description: Classification of a line's operational condition.
+    LineStatus:
+      type: object
+      required: [code, label, category]
+      properties:
+        code:
+          type: string
+          description: Raw upstream status code (preserved).
+          example: "OperacaoNormal"
+        label:
+          type: string
+          description: Human-readable PT-BR status text from the source.
+          example: "Operação Normal"
+        description:
+          type: string
+          nullable: true
+          description: Optional extra detail from the source.
+        category:
+          $ref: "#/components/schemas/StatusCategory"
+    Line:
+      type: object
+      required: [uid, number, name, operatorUid, status]
+      properties:
+        uid: { type: string, example: "METRO-L1" }
+        number: { type: string, example: "1" }
+        name: { type: string, example: "Azul" }
+        colorRgb:
+          type: string
+          nullable: true
+          pattern: "^#([0-9A-Fa-f]{6})$"
+          example: "#0A3D91"
+        iconUrl: { type: string, nullable: true }
+        operatorUid: { type: string, example: "METRO" }
+        status: { $ref: "#/components/schemas/LineStatus" }
+    Operator:
+      type: object
+      required: [uid, name, state, lines]
+      properties:
+        uid: { type: string, example: "METRO" }
+        name: { type: string, example: "Metro SP" }
+        state: { type: string, example: "SP" }
+        logoUrl: { type: string, nullable: true }
+        lines:
+          type: array
+          items: { $ref: "#/components/schemas/Line" }
+    StatusSnapshot:
+      type: object
+      required: [lastUpdated, fetchedAt, stale, available, partial, operators, orderedLines]
+      properties:
+        lastUpdated:
+          type: string
+          format: date-time
+          description: Upstream data update time (dataAtualizacao).
+        fetchedAt:
+          type: string
+          format: date-time
+          description: When the backend last fetched successfully.
+        stale:
+          type: boolean
+          description: True when serving a retained snapshot after a failed refresh.
+        available:
+          type: boolean
+          description: True when at least one operator/line is present.
+        partial:
+          type: boolean
+          description: True when the upstream set was incomplete (FR-010).
+        operators:
+          type: array
+          items: { $ref: "#/components/schemas/Operator" }
+        orderedLines:
+          type: array
+          description: All lines flattened, ordered disrupted-first then by operator and number (FR-014).
+          items: { $ref: "#/components/schemas/Line" }
+    Unavailable:
+      type: object
+      required: [available, message]
+      properties:
+        available:
+          type: boolean
+          enum: [false]
+        message:
+          type: string
+          description: User-friendly PT-BR message (no raw technical error).

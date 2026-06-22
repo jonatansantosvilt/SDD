@@ -14,6 +14,7 @@
 
 - Q: When the upstream source is unreachable, what should the user see? → A: Serve the last-known-good data with a visible staleness warning; show a full error screen only if no data has ever been successfully loaded.
 - Q: What is the automatic refresh interval? → A: 60 seconds (1 minute).
+- Q: How should lines be ordered in the list? → A: Disrupted lines first (sorted to top), then normal lines; within each, grouped by operator and ordered by line number.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -137,6 +138,8 @@ refresh, and confirm the displayed information and timestamp update.
   interface usable by a São Paulo commuter.
 - **FR-013**: System MUST be usable on a mobile-sized screen, as commuters typically check status on
   a phone.
+- **FR-014**: System MUST order lines with disrupted lines first (sorted to the top), then normally
+  operating lines; within each group, lines are grouped by operator and ordered by line number.
 
 ### Key Entities *(include if feature involves data)*
 
