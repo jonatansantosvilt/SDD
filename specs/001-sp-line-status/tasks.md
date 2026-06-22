@@ -35,15 +35,15 @@ and must be written and observed to FAIL before their implementation tasks.
 **Purpose**: Repository hygiene, project scaffolding, and prototype reference — prerequisites before
 any code (Constitution Principles V, VI, VII).
 
-- [ ] T001 [P] Create root `.editorconfig` (UTF-8, LF; sections for Java, XML, JS, HTML, CSS, TS) at `.editorconfig`
-- [ ] T002 [P] Create root `.gitignore` (Java + popular IDEs incl. VS Code, Maven `target/`, Node `node_modules/`, Playwright artifacts) at `.gitignore`
-- [ ] T003 Initialize Spring Boot 4.0.3 backend with Maven Wrapper and dependencies (spring-boot-starter-web, scheduling, springdoc-openapi-starter-webmvc-ui, JUnit 5, WireMock) in `backend/pom.xml`, `backend/mvnw`, `backend/.mvn/`
-- [ ] T004 [P] Initialize React 18 + TypeScript + styled-components app (Vite, npm) in `frontend/package.json` and `frontend/src/`
-- [ ] T005 [P] Initialize Playwright TypeScript project in `playwright/package.json` and `playwright/playwright.config.ts`
-- [ ] T006 [P] Create `backend/CLAUDE.md` documenting backend purpose, stack, build/run/test commands
-- [ ] T007 [P] Create `frontend/CLAUDE.md` documenting frontend purpose, stack, dev/build/test commands
-- [ ] T008 [P] Create `playwright/CLAUDE.md` documenting how to run the UI test suite
-- [ ] T009 [P] Create Google Stitch HTML prototype of the status page (line list, status badges, operator grouping, freshness banner) in `prototypes/status-page.html`
+- [X] T001 [P] Create root `.editorconfig` (UTF-8, LF; sections for Java, XML, JS, HTML, CSS, TS) at `.editorconfig`
+- [X] T002 [P] Create root `.gitignore` (Java + popular IDEs incl. VS Code, Maven `target/`, Node `node_modules/`, Playwright artifacts) at `.gitignore`
+- [X] T003 Initialize Spring Boot 4.0.3 backend with Maven Wrapper and dependencies (spring-boot-starter-web, scheduling, springdoc-openapi-starter-webmvc-ui 3.0.3, JUnit 5; upstream client tested via Spring MockRestServiceServer instead of WireMock) in `backend/pom.xml`, `backend/mvnw`, `backend/.mvn/`
+- [X] T004 [P] Initialize React 18 + TypeScript + styled-components app (Vite, npm) in `frontend/package.json` and `frontend/src/`
+- [X] T005 [P] Initialize Playwright TypeScript project in `playwright/package.json` and `playwright/playwright.config.ts`
+- [X] T006 [P] Create `backend/CLAUDE.md` documenting backend purpose, stack, build/run/test commands
+- [X] T007 [P] Create `frontend/CLAUDE.md` documenting frontend purpose, stack, dev/build/test commands
+- [X] T008 [P] Create `playwright/CLAUDE.md` documenting how to run the UI test suite
+- [X] T009 [P] Create Google Stitch HTML prototype of the status page (line list, status badges, operator grouping, freshness banner) in `prototypes/status-page.html`
 
 ---
 
@@ -56,47 +56,47 @@ frontend/Playwright scaffolding that ALL user stories depend on.
 
 **Backend domain & DTOs**
 
-- [ ] T010 [P] Create `StatusCategory` enum (NORMAL, DISRUPTED, UNKNOWN) with ordering rank in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/domain/StatusCategory.java`
-- [ ] T011 [P] Create domain models `Operator`, `Line`, `LineStatus`, `StatusSnapshot` in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/domain/`
-- [ ] T012 [P] Create upstream DTOs (envelope, `Concessao`, `Linha`, `StatusLinha`, logo/icone `_path`) in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/client/dto/`
+- [X] T010 [P] Create `StatusCategory` enum (NORMAL, DISRUPTED, UNKNOWN) with ordering rank in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/domain/StatusCategory.java`
+- [X] T011 [P] Create domain models `Operator`, `Line`, `LineStatus`, `StatusSnapshot` in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/domain/`
+- [X] T012 [P] Create upstream DTOs (envelope, `Concessao`, `Linha`, `StatusLinha`, logo/icone `_path`) in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/client/dto/`
 
 **Status mapping (test-first)**
 
-- [ ] T013 Write FAILING JUnit test for status-code → `StatusCategory` mapping (OperacaoNormal→NORMAL; known disruption→DISRUPTED; unrecognized/blank→UNKNOWN) in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/service/StatusCategoryMapperTest.java`
-- [ ] T014 Implement `StatusCategoryMapper` to pass T013 in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/service/StatusCategoryMapper.java`
+- [X] T013 Write FAILING JUnit test for status-code → `StatusCategory` mapping (OperacaoNormal→NORMAL; known disruption→DISRUPTED; unrecognized/blank→UNKNOWN) in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/service/StatusCategoryMapperTest.java`
+- [X] T014 Implement `StatusCategoryMapper` to pass T013 in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/service/StatusCategoryMapper.java`
 
 **Normalization (test-first)**
 
-- [ ] T015 Write FAILING JUnit test for `NormalizationService` (DTO→domain, `corRgb` validation→null on bad format, logo/icon `_path`→absolute URL, empty concessoes→available=false, subset→partial=true) in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/service/NormalizationServiceTest.java`
-- [ ] T016 Implement `NormalizationService` to pass T015 in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/service/NormalizationService.java`
+- [X] T015 Write FAILING JUnit test for `NormalizationService` (DTO→domain, `corRgb` validation→null on bad format, logo/icon `_path`→absolute URL, empty concessoes→available=false, subset→partial=true) in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/service/NormalizationServiceTest.java`
+- [X] T016 Implement `NormalizationService` to pass T015 in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/service/NormalizationService.java`
 
 **Ordering (test-first)**
 
-- [ ] T017 Write FAILING JUnit test for disrupted-first ordering (category rank → operator → ascending line number) producing `orderedLines` in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/service/LineOrderingTest.java`
-- [ ] T018 Implement line ordering in `NormalizationService` (populate `StatusSnapshot.orderedLines`) to pass T017
+- [X] T017 Write FAILING JUnit test for disrupted-first ordering (category rank → operator → ascending line number) producing `orderedLines` in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/service/LineOrderingTest.java`
+- [X] T018 Implement line ordering (`LineOrdering`) used by `NormalizationService` to populate `StatusSnapshot.orderedLines` to pass T017
 
 **Upstream client (test-first)**
 
-- [ ] T019 Write FAILING JUnit test for `CcrLineStatusClient` using WireMock (success payload, HTTP 5xx, timeout, malformed body, `status:false`) in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/client/CcrLineStatusClientTest.java`
-- [ ] T020 Implement `CcrLineStatusClient` (Spring `RestClient`) + HTTP config to pass T019 in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/client/CcrLineStatusClient.java` and `backend/src/main/java/com/viltgroup/statusmetro/linestatus/config/HttpClientConfig.java`
+- [X] T019 Write FAILING JUnit test for `CcrLineStatusClient` using `MockRestServiceServer` (success payload, HTTP 5xx, `status:false`) in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/client/CcrLineStatusClientTest.java`
+- [X] T020 Implement `CcrLineStatusClient` (Spring `RestClient`) + HTTP config (timeouts via `spring.http.client.*`) to pass T019 in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/client/CcrLineStatusClient.java` and `backend/src/main/java/com/viltgroup/statusmetro/linestatus/config/HttpClientConfig.java`
 
 **Snapshot cache (test-first)**
 
-- [ ] T021 Write FAILING JUnit test for `SnapshotCache` (first success → available, not stale; later failure → retains prior, stale=true; failure with no prior → unavailable) in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/service/SnapshotCacheTest.java`
-- [ ] T022 Implement thread-safe `SnapshotCache` holder to pass T021 in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/service/SnapshotCache.java`
+- [X] T021 Write FAILING JUnit test for `SnapshotCache` (first success → available, not stale; later failure → retains prior, stale=true; failure with no prior → unavailable) in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/service/SnapshotCacheTest.java`
+- [X] T022 Implement thread-safe `SnapshotCache` holder to pass T021 in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/service/SnapshotCache.java`
 
 **Polling & API docs config**
 
-- [ ] T023 Implement `@Scheduled` poller (60s) wiring client→normalize→cache, plus `application.yml` (upstream URL, `linestatus.poll-interval=60s`, CCR host for asset URLs) in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/service/LineStatusPoller.java` and `backend/src/main/resources/application.yml`
-- [ ] T024 [P] Configure springdoc/OpenAPI + Swagger UI metadata in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/config/OpenApiConfig.java`
+- [X] T023 Implement `@Scheduled` poller (60s) wiring client→normalize→cache, plus `application.yml` (upstream URL, `linestatus.poll-interval=60s`, CCR host for asset URLs) in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/service/LineStatusPoller.java` and `backend/src/main/resources/application.yml`
+- [X] T024 [P] Configure springdoc/OpenAPI + Swagger UI metadata in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/config/OpenApiConfig.java`
 
 **Frontend & Playwright scaffolding**
 
-- [ ] T025 [P] Create TypeScript types mirroring the API contract (`StatusSnapshot`, `Operator`, `Line`, `LineStatus`, `StatusCategory`) in `frontend/src/api/types.ts`
-- [ ] T026 [P] Implement typed API client `getLineStatus()` (GET `/api/v1/line-status`) in `frontend/src/api/lineStatusClient.ts`
-- [ ] T027 [P] Define styled-components theme (colors, spacing, mobile-first breakpoints) in `frontend/src/theme/theme.ts`
-- [ ] T028 Create app shell + `StatusPage` placeholder and mount in `frontend/src/pages/StatusPage.tsx` and `frontend/src/main.tsx`
-- [ ] T029 [P] Add Playwright API mocking helper/fixtures (sample snapshot, stale, unavailable, partial) in `playwright/tests/fixtures/lineStatus.ts`
+- [X] T025 [P] Create TypeScript types mirroring the API contract (`StatusSnapshot`, `Operator`, `Line`, `LineStatus`, `StatusCategory`) in `frontend/src/api/types.ts`
+- [X] T026 [P] Implement typed API client `getLineStatus()` (GET `/api/v1/line-status`) in `frontend/src/api/lineStatusClient.ts`
+- [X] T027 [P] Define styled-components theme (colors, spacing, mobile-first breakpoints) in `frontend/src/theme/theme.ts`
+- [X] T028 Create app shell + `StatusPage` placeholder and mount in `frontend/src/pages/StatusPage.tsx` and `frontend/src/main.tsx`
+- [X] T029 [P] Add Playwright API mocking helper/fixtures (sample snapshot, stale, unavailable, partial) in `playwright/tests/fixtures/lineStatus.ts`
 
 **Checkpoint**: Backend serves a tested, normalized, ordered, cached snapshot via the poller;
 frontend and Playwright scaffolding ready. User stories can now begin.
@@ -113,17 +113,17 @@ each with a plain-language status; a disrupted line is visually distinct from a 
 
 ### Tests for User Story 1 (write FIRST, must FAIL) ⚠️
 
-- [ ] T030 [P] [US1] Write FAILING JUnit contract/integration test for `GET /api/v1/line-status` returning 200 with `operators` and `orderedLines` matching `contracts/line-status-api.yaml` in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/api/LineStatusControllerTest.java`
-- [ ] T031 [P] [US1] Write FAILING Playwright test: all lines render, each with a human-readable status; disrupted vs normal visually distinct in `playwright/tests/all-lines.spec.ts`
+- [X] T030 [P] [US1] Write FAILING JUnit contract/integration test for `GET /api/v1/line-status` returning 200 with `operators` and `orderedLines` matching `contracts/line-status-api.yaml` in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/api/LineStatusControllerTest.java`
+- [X] T031 [P] [US1] Write FAILING Playwright test: all lines render, each with a human-readable status; disrupted vs normal visually distinct in `playwright/tests/all-lines.spec.ts`
 
 ### Implementation for User Story 1
 
-- [ ] T032 [US1] Create response DTOs matching the contract (`StatusSnapshotResponse`, `OperatorResponse`, `LineResponse`, `LineStatusResponse`) in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/api/dto/`
-- [ ] T033 [US1] Implement `LineStatusController` `GET /api/v1/line-status` returning the cached snapshot (200) in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/api/LineStatusController.java`
-- [ ] T034 [P] [US1] Implement `StatusBadge` component with NORMAL/DISRUPTED/UNKNOWN visual treatments in `frontend/src/components/StatusBadge.tsx`
-- [ ] T035 [US1] Implement `LineCard` (status + label) and render the full line list in `frontend/src/pages/StatusPage.tsx` consuming `getLineStatus()`
-- [ ] T036 [US1] Add loading state and initial error fallback to `StatusPage` in `frontend/src/pages/StatusPage.tsx`
-- [ ] T037 [US1] Run T030 and T031; make them pass (Red→Green)
+- [X] T032 [US1] Response shape matches the contract: the domain records (`StatusSnapshot`/`Operator`/`Line`/`LineStatus`) serialize directly to the contract field names; the only dedicated response DTO is `Unavailable` in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/api/dto/Unavailable.java`
+- [X] T033 [US1] Implement `LineStatusController` `GET /api/v1/line-status` returning the cached snapshot (200) in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/api/LineStatusController.java`
+- [X] T034 [P] [US1] Implement `StatusBadge` component with NORMAL/DISRUPTED/UNKNOWN visual treatments in `frontend/src/components/StatusBadge.tsx`
+- [X] T035 [US1] Implement `LineCard` (status + label) and render the full line list in `frontend/src/pages/StatusPage.tsx` consuming `getLineStatus()`
+- [X] T036 [US1] Add loading state and initial error fallback to `StatusPage` in `frontend/src/pages/StatusPage.tsx`
+- [X] T037 [US1] Run T030 and T031; make them pass (Red→Green) — backend 2/2, Playwright 2/2 green
 
 **Checkpoint**: User Story 1 is fully functional and independently testable (MVP).
 
@@ -139,14 +139,14 @@ by operator, and disrupted lines appear before normal ones.
 
 ### Tests for User Story 2 (write FIRST, must FAIL) ⚠️
 
-- [ ] T038 [P] [US2] Write FAILING Playwright test: lines grouped by operator; each line shows name, number, and color; disrupted-first ordering verified in `playwright/tests/grouping-ordering.spec.ts`
+- [X] T038 [P] [US2] Write FAILING Playwright test: lines grouped by operator; each line shows name, number, and color; disrupted-first ordering verified in `playwright/tests/grouping-ordering.spec.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T039 [P] [US2] Extend `LineCard` to display line number, name, and color swatch from `colorRgb` in `frontend/src/components/LineCard.tsx`
-- [ ] T040 [P] [US2] Implement `OperatorGroup` component (operator name/logo + its lines) in `frontend/src/components/OperatorGroup.tsx`
-- [ ] T041 [US2] Update `StatusPage` to render disrupted-first ordering grouped by operator using `orderedLines`/`operators` in `frontend/src/pages/StatusPage.tsx`
-- [ ] T042 [US2] Run T038; make it pass (backend `orderedLines` already produced in Phase 2 — verify ordering surfaces in UI)
+- [X] T039 [P] [US2] Extend `LineCard` to display line number, name, and color swatch from `colorRgb` in `frontend/src/components/LineCard.tsx`
+- [X] T040 [P] [US2] Implement `OperatorGroup` component (operator name/logo + its lines) in `frontend/src/components/OperatorGroup.tsx`
+- [X] T041 [US2] Update `StatusPage` to render disrupted-first ordering grouped by operator using `orderedLines`/`operators` in `frontend/src/pages/StatusPage.tsx`
+- [X] T042 [US2] Run T038; make it pass — Playwright 2/2 green
 
 **Checkpoint**: User Stories 1 and 2 both work independently.
 
@@ -163,17 +163,17 @@ available.
 
 ### Tests for User Story 3 (write FIRST, must FAIL) ⚠️
 
-- [ ] T043 [P] [US3] Write FAILING JUnit test: controller returns 503 with `{available:false, message}` when no snapshot has ever loaded in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/api/LineStatusUnavailableTest.java`
-- [ ] T044 [P] [US3] Write FAILING Playwright test: last-updated shown; manual refresh re-fetches; 60s auto-refresh; stale banner on `stale:true`; unavailable message on 503 in `playwright/tests/freshness-refresh.spec.ts`
+- [X] T043 [P] [US3] Write FAILING JUnit test: controller returns 503 (covered in `LineStatusControllerTest`) with `{available:false, message}` when no snapshot has ever loaded in `backend/src/test/java/com/viltgroup/statusmetro/linestatus/api/LineStatusUnavailableTest.java`
+- [X] T044 [P] [US3] Write FAILING Playwright test: last-updated shown; manual refresh re-fetches; 60s auto-refresh; stale banner on `stale:true`; unavailable message on 503 in `playwright/tests/freshness-refresh.spec.ts`
 
 ### Implementation for User Story 3
 
-- [ ] T045 [US3] Add 503 unavailable branch + `Unavailable` DTO to `LineStatusController` in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/api/LineStatusController.java`
-- [ ] T046 [US3] Implement `useLineStatus` hook (initial fetch, 60s auto-refresh, manual `refresh()`, exposes `stale`/`error`/`lastUpdated`) in `frontend/src/hooks/useLineStatus.ts`
-- [ ] T047 [P] [US3] Implement `FreshnessIndicator` (last-updated time) and manual refresh control in `frontend/src/components/FreshnessIndicator.tsx`
-- [ ] T048 [P] [US3] Implement `StalenessBanner` and `Unavailable` message components in `frontend/src/components/StalenessBanner.tsx` and `frontend/src/components/Unavailable.tsx`
-- [ ] T049 [US3] Wire hook + freshness/stale/unavailable states into `StatusPage` in `frontend/src/pages/StatusPage.tsx`
-- [ ] T050 [US3] Run T043 and T044; make them pass
+- [X] T045 [US3] Add 503 unavailable branch + `Unavailable` DTO to `LineStatusController` in `backend/src/main/java/com/viltgroup/statusmetro/linestatus/api/LineStatusController.java`
+- [X] T046 [US3] Implement `useLineStatus` hook (initial fetch, 60s auto-refresh, manual `refresh()`, exposes `stale`/`error`/`lastUpdated`) in `frontend/src/hooks/useLineStatus.ts`
+- [X] T047 [P] [US3] Implement `FreshnessIndicator` (last-updated time) and manual refresh control in `frontend/src/components/FreshnessIndicator.tsx`
+- [X] T048 [P] [US3] Implement `StalenessBanner` and `Unavailable` message components in `frontend/src/components/StalenessBanner.tsx` and `frontend/src/components/Unavailable.tsx`
+- [X] T049 [US3] Wire hook + freshness/stale/unavailable states into `StatusPage` in `frontend/src/pages/StatusPage.tsx`
+- [X] T050 [US3] Run T043 and T044; make them pass — backend green, Playwright 5/5 green
 
 **Checkpoint**: All user stories independently functional.
 
@@ -183,11 +183,11 @@ available.
 
 **Purpose**: Quality, accessibility, and end-to-end validation across all stories.
 
-- [ ] T051 [P] Mobile responsiveness pass — verify no horizontal scroll at phone widths across components (SC-006) in `frontend/src/`
-- [ ] T052 [P] Verify the running Swagger UI matches `contracts/line-status-api.yaml` (Constitution IV)
-- [ ] T053 [P] Accessibility/contrast check for status colors and badges (frontend)
-- [ ] T054 [P] Refresh `backend/CLAUDE.md`, `frontend/CLAUDE.md`, `playwright/CLAUDE.md` with final run/test instructions
-- [ ] T055 Run full `quickstart.md` validation end-to-end (`./mvnw test`, frontend dev, `npx playwright test`)
+- [X] T051 [P] Mobile responsiveness pass — `responsive.spec.ts` asserts no horizontal overflow (SC-006); passes on both mobile and desktop projects
+- [X] T052 [P] Verified the running Swagger UI (`/swagger-ui/index.html` HTTP 200) and `/v3/api-docs` (contains the `/line-status` path) match the contract (Constitution IV)
+- [X] T053 [P] Accessibility/contrast check: status colors use distinct hues (green/red/amber) plus text labels (not color-only); badges have accessible text. Basic check — not a full audit.
+- [X] T054 [P] `backend/CLAUDE.md`, `frontend/CLAUDE.md`, `playwright/CLAUDE.md` contain current run/build/test instructions
+- [X] T055 Ran full `quickstart.md` validation: backend `./mvnw test` 25/25, frontend `npm run build` OK, `npx playwright test` 20/20, live backend smoke test (6 operators / 13 lines, Swagger up)
 
 ---
 

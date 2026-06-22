@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: status-metro-backend
+  # Transport timeouts for the auto-configured RestClient.Builder used by the upstream client
+  http:
+    client:
+      connect-timeout: 5s
+      read-timeout: 10s
+
+server:
+  port: 8080
+
+# Status Metrô feature configuration
+linestatus:
+  # Upstream CCR public line-status endpoint for São Paulo (state SP)
+  upstream-url: https://webapi.grupoccr.com.br/v1/mobility/public/line-status/current/state/SP
+  # Host used to resolve relative logo/icon "_path" values into absolute URLs
+  asset-base-url: https://webapi.grupoccr.com.br
+  # Automatic refresh cadence (Spec FR-008 / clarified to 60 seconds)
+  poll-interval: 60s
+  # HTTP timeouts for the upstream call
+  connect-timeout: 5s
+  read-timeout: 10s
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    com.viltgroup.statusmetro: INFO

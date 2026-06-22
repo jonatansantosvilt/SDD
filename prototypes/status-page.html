@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Status Metrô — Protótipo</title>
+  <style>
+    :root {
+      --bg: #0f1419; --surface: #1a212b; --surface-2: #222c38;
+      --text: #e8edf2; --muted: #9aa7b4; --border: #2c3744;
+      --normal: #2ec27e; --disrupted: #e5484d; --unknown: #f5a623;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.4;
+    }
+    .app { max-width: 480px; margin: 0 auto; padding: 16px; }
+    header h1 { font-size: 1.4rem; margin: 8px 0 2px; }
+    header p { color: var(--muted); margin: 0 0 12px; font-size: .85rem; }
+    .freshness {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 10px 14px; margin-bottom: 8px; font-size: .85rem;
+    }
+    .freshness .muted { color: var(--muted); }
+    .refresh-btn {
+      background: var(--surface-2); color: var(--text); border: 1px solid var(--border);
+      border-radius: 999px; padding: 6px 14px; font-size: .8rem; cursor: pointer;
+    }
+    .stale-banner {
+      background: rgba(245,166,35,.12); border: 1px solid var(--unknown); color: var(--unknown);
+      border-radius: var(--radius); padding: 10px 14px; margin-bottom: 12px; font-size: .85rem;
+    }
+    .operator { margin: 18px 0 8px; }
+    .operator h2 {
+      font-size: .8rem; text-transform: uppercase; letter-spacing: .06em;
+      color: var(--muted); margin: 0 0 8px; display: flex; align-items: center; gap: 8px;
+    }
+    .line-card {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 12px 14px; margin-bottom: 8px;
+    }
+    .line-card.disrupted { border-color: var(--disrupted); }
+    .num {
+      width: 34px; height: 34px; flex: 0 0 34px; border-radius: 9px;
+      display: grid; place-items: center; font-weight: 700; color: #0b0e12;
+    }
+    .line-meta { flex: 1; min-width: 0; }
+    .line-name { font-weight: 600; }
+    .line-status { font-size: .82rem; color: var(--muted); }
+    .badge {
+      font-size: .72rem; font-weight: 700; padding: 4px 10px; border-radius: 999px;
+      white-space: nowrap;
+    }
+    .badge.normal { background: rgba(46,194,126,.15); color: var(--normal); }
+    .badge.disrupted { background: rgba(229,72,77,.15); color: var(--disrupted); }
+    .badge.unknown { background: rgba(245,166,35,.15); color: var(--unknown); }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <h1>Status Metrô</h1>
+      <p>Situação das linhas — Metrô &amp; CPTM · São Paulo</p>
+    </header>
+
+    <div class="freshness">
+      <span class="muted">Atualizado às <strong>18:47</strong></span>
+      <button class="refresh-btn">↻ Atualizar</button>
+    </div>
+
+    <!-- Shown only when serving last-known-good after an upstream failure -->
+    <div class="stale-banner">⚠ Dados podem estar desatualizados — última atualização às 18:30.</div>
+
+    <!-- Disrupted lines surface first (FR-014) -->
+    <section class="operator">
+      <h2>Metro SP</h2>
+      <div class="line-card disrupted">
+        <div class="num" style="background:#ee3d23">3</div>
+        <div class="line-meta">
+          <div class="line-name">Vermelha</div>
+          <div class="line-status">Velocidade reduzida entre Sé e Itaquera</div>
+        </div>
+        <span class="badge disrupted">Reduzida</span>
+      </div>
+      <div class="line-card">
+        <div class="num" style="background:#0a3d91;color:#fff">1</div>
+        <div class="line-meta">
+          <div class="line-name">Azul</div>
+          <div class="line-status">Operação Normal</div>
+        </div>
+        <span class="badge normal">Normal</span>
+      </div>
+      <div class="line-card">
+        <div class="num" style="background:#007a33;color:#fff">2</div>
+        <div class="line-meta">
+          <div class="line-name">Verde</div>
+          <div class="line-status">Operação Normal</div>
+        </div>
+        <span class="badge normal">Normal</span>
+      </div>
+    </section>
+
+    <section class="operator">
+      <h2>CPTM</h2>
+      <div class="line-card">
+        <div class="num" style="background:#00a4a7;color:#fff">8</div>
+        <div class="line-meta">
+          <div class="line-name">Diamante</div>
+          <div class="line-status">Operação Normal</div>
+        </div>
+        <span class="badge normal">Normal</span>
+      </div>
+      <div class="line-card">
+        <div class="num" style="background:#9b59b6;color:#fff">9</div>
+        <div class="line-meta">
+          <div class="line-name">Esmeralda</div>
+          <div class="line-status">Situação não informada</div>
+        </div>
+        <span class="badge unknown">Desconhecido</span>
+      </div>
+    </section>
+
+    <section class="operator">
+      <h2>Motiva Linha Quatro</h2>
+      <div class="line-card">
+        <div class="num" style="background:#fcc540">4</div>
+        <div class="line-meta">
+          <div class="line-name">Amarela</div>
+          <div class="line-status">Operação Normal</div>
+        </div>
+        <span class="badge normal">Normal</span>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "status-metro-playwright",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Playwright functional UI tests for Status Metrô",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2"
+  }
+}
